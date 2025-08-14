@@ -8,7 +8,7 @@ A web application that predicts heart disease risk using machine learning. Built
 This app uses a machine learning model trained on real patient data to estimate the risk of heart disease. Enter patient information, and the app will predict the risk and show the probability.
 
 ## 🌐 Try it Online
-Deployed on [Streamlit Community Cloud](https://streamlit.io/cloud) (replace with your app link after deployment).
+Deployed on [Streamlit Community Cloud](https://m-f-tushar-heart-disease-prediction-web-app-app-hwx2ii.streamlit.app/).
 
 ---
 
