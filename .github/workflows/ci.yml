@@ -30,9 +30,11 @@ jobs:
       run: |
         python -c "import streamlit; import pandas; import numpy; import sklearn; print('All imports successful')"
     
-    - name: Check if data file exists
+    - name: Verify required files exist
       run: |
-        test -f heart-disease.csv && echo "Dataset found" || exit 1
+        test -f heart-disease.csv && echo "✓ Dataset file found" || (echo "✗ Dataset file missing" && exit 1)
+        test -f app.py && echo "✓ App file found" || (echo "✗ App file missing" && exit 1)
+        test -f requirements.txt && echo "✓ Requirements file found" || (echo "✗ Requirements file missing" && exit 1)
     
     - name: Lint with flake8 (if available)
       run: |

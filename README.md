@@ -82,9 +82,10 @@ Deployed on [Streamlit Community Cloud](https://m-f-tushar-heart-disease-predict
 ### Deploy to Streamlit Cloud
 
 1. Fork this repository to your GitHub account
-2. Go to [Streamlit Community Cloud](https://streamlit.io/cloud) and sign in with GitHub
-3. Click **New app**, select your forked repo, and set the main file to `app.py`
-4. Click **Deploy**. Your app will be live in a few minutes!
+2. Update the CI badge in README.md with your repository URL (optional)
+3. Go to [Streamlit Community Cloud](https://streamlit.io/cloud) and sign in with GitHub
+4. Click **New app**, select your forked repo, and set the main file to `app.py`
+5. Click **Deploy**. Your app will be live in a few minutes!
 
 ### Required Files for Deployment
 - `app.py` - Main Streamlit application

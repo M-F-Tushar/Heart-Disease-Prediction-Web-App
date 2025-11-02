@@ -54,9 +54,6 @@ def load_model() -> Any:
         with open(model_path, "rb") as f:
             model = pickle.load(f)
         return model
-    except FileNotFoundError:
-        st.error(f"❌ Model file not found at {model_path}")
-        st.stop()
     except Exception as e:
         st.error(f"❌ Error loading model: {str(e)}")
         st.stop()
