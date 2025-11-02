@@ -1,13 +1,24 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
-import pickle
-import os
+"""Heart Disease Prediction Web Application.
 
-# Try to load the model, create it if it doesn't exist
+This Streamlit app predicts heart disease risk using a machine learning model
+trained on the UCI Heart Disease dataset.
+"""
+import os
+import pickle
+from typing import Any
+
+import numpy as np
+import pandas as pd
+import streamlit as st
+
+
 @st.cache_resource
-def load_model():
-    """Load the trained model, create it if it doesn't exist"""
+def load_model() -> Any:
+    """Load the trained model, create it if it doesn't exist.
+    
+    Returns:
+        Trained LogisticRegression model for heart disease prediction.
+    """
     model_path = "heart_disease_model.pkl"
     
     if not os.path.exists(model_path):
@@ -35,6 +46,7 @@ def load_model():
             
         except Exception as e:
             st.error(f"❌ Error setting up model: {str(e)}")
+            st.info("Please ensure the heart-disease.csv file exists in the same directory.")
             st.stop()
     
     # Load existing model
@@ -45,6 +57,37 @@ def load_model():
     except Exception as e:
         st.error(f"❌ Error loading model: {str(e)}")
         st.stop()
+
+
+def validate_input(age: int, trestbps: int, chol: int, thalach: int, oldpeak: float) -> bool:
+    """Validate user input values are within reasonable medical ranges.
+    
+    Args:
+        age: Patient age in years
+        trestbps: Resting blood pressure in mm Hg
+        chol: Serum cholesterol in mg/dl
+        thalach: Maximum heart rate achieved
+        oldpeak: ST depression induced by exercise
+        
+    Returns:
+        True if all inputs are valid, False otherwise
+    """
+    if not (18 <= age <= 100):
+        st.warning("Age should be between 18 and 100 years")
+        return False
+    if not (80 <= trestbps <= 200):
+        st.warning("Resting blood pressure should be between 80 and 200 mm Hg")
+        return False
+    if not (100 <= chol <= 600):
+        st.warning("Cholesterol should be between 100 and 600 mg/dl")
+        return False
+    if not (70 <= thalach <= 210):
+        st.warning("Maximum heart rate should be between 70 and 210 bpm")
+        return False
+    if not (0.0 <= oldpeak <= 6.0):
+        st.warning("ST depression should be between 0.0 and 6.0")
+        return False
+    return True
 
 # Load the model
 model = load_model()
@@ -92,6 +135,10 @@ col1, col2, col3 = st.columns([1, 2, 1])
 
 with col2:
     if st.button("🔍 Predict Heart Disease Risk", use_container_width=True):
+        # Validate inputs
+        if not validate_input(age, trestbps, chol, thalach, oldpeak):
+            st.stop()
+            
         try:
             prediction = model.predict(input_data)
             probability = model.predict_proba(input_data)[0]
